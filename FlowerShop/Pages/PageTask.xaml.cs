@@ -31,7 +31,7 @@ namespace FlowerShop.Pages
         private void InitializeFilters()
         {
             var categories = AppConnect.model01.categories.OrderBy(c => c.name).ToList();
-            categories.Insert(0, new categories { id = 0, name = "Все категории" });
+            categories.Insert(0, new FlowerShop.ApplicationData.categories { id = 0, name = "Все категории" });
             CbCategory.ItemsSource = categories;
             CbCategory.DisplayMemberPath = "name";
             CbCategory.SelectedValuePath = "id";
@@ -48,7 +48,7 @@ namespace FlowerShop.Pages
                 query = query.Where(p => p.name.ToLower().Contains(search));
             }
 
-            if (CbCategory.SelectedItem is categories category && category.id != 0)
+            if (CbCategory.SelectedItem is FlowerShop.ApplicationData.categories category && category.id != 0)
             {
                 query = query.Where(p => p.category_id == category.id);
             }

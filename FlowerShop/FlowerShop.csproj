@@ -209,5 +209,4 @@
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" Condition="false" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />
 </Project>
