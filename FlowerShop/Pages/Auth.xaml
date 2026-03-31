@@ -3,14 +3,22 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Auth">
     <Grid Margin="20">
-        <StackPanel Width="320" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Авторизация" FontSize="24" Margin="0,0,0,16"/>
-            <TextBlock Text="Логин"/>
-            <TextBox x:Name="TbLogin" Margin="0,4,0,10"/>
-            <TextBlock Text="Пароль"/>
-            <PasswordBox x:Name="PbPassword" Margin="0,4,0,16"/>
-            <Button Content="Войти" Click="BtnLogin_Click" Height="34" Margin="0,0,0,10"/>
-            <Button Content="Регистрация" Click="BtnGoRegister_Click" Height="34"/>
-        </StackPanel>
+        <GroupBox Header="Вход в цветочный магазин"
+                  Width="380"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Добро пожаловать в Flower Shop 🌷"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,16"/>
+                <TextBlock Text="Логин"/>
+                <TextBox x:Name="TbLogin" Margin="0,4,0,10"/>
+                <TextBlock Text="Пароль"/>
+                <PasswordBox x:Name="PbPassword" Margin="0,4,0,16"/>
+                <Button Content="Войти" Click="BtnLogin_Click" Height="34" Margin="0,0,0,10"/>
+                <Button Content="Регистрация" Click="BtnGoRegister_Click" Height="34"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Page>
