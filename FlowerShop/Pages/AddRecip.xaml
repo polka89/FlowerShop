@@ -1,0 +1,44 @@
+<Page x:Class="FlowerShop.Pages.AddRecip"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="AddRecip">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="0,0,20,0">
+            <TextBlock Text="Название товара"/>
+            <TextBox Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10"/>
+
+            <TextBlock Text="Описание"/>
+            <TextBox Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Height="90" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,4,0,10"/>
+
+            <TextBlock Text="Цена"/>
+            <TextBox x:Name="TbPrice" Text="{Binding price, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10"/>
+
+            <TextBlock Text="Изображение"/>
+            <TextBox Text="{Binding image_url, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,6"/>
+            <Button Content="Загрузить изображение" Click="BtnUploadImage_Click" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Категория"/>
+            <ComboBox x:Name="CbCategory" DisplayMemberPath="name" SelectedValuePath="id" SelectionChanged="CbCategory_SelectionChanged" Margin="0,4,0,16"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Сохранить" Width="120" Click="BtnSave_Click"/>
+                <Button Content="Назад" Width="120" Margin="10,0,0,0" Click="BtnBack_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <Border BorderThickness="1" Padding="6" Margin="0,0,0,8">
+                <Image x:Name="ImgPreview" Height="220" Stretch="Uniform"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="◀" Width="40" Click="BtnPrevImage_Click"/>
+                <Button Content="▶" Width="40" Margin="10,0,0,0" Click="BtnNextImage_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

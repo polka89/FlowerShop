@@ -1,0 +1,8 @@
+<Window x:Class="FlowerShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Epstains Market" Height="720" Width="1200">
+    <Grid>
+        <Frame x:Name="frmMain" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
