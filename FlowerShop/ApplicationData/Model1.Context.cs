@@ -34,5 +34,11 @@ namespace FlowerShop.ApplicationData
         public virtual DbSet<payment_methods> payment_methods { get; set; }
         public virtual DbSet<payments> payments { get; set; }
         public virtual DbSet<reviews> reviews { get; set; }
+        public virtual DbSet<suppliers> suppliers { get; set; }
+        public virtual DbSet<deliveries> deliveries { get; set; }
+        public virtual DbSet<inventory_batches> inventory_batches { get; set; }
+        public virtual DbSet<discounts> discounts { get; set; }
+        public virtual DbSet<bouquet_templates> bouquet_templates { get; set; }
+        public virtual DbSet<employees> employees { get; set; }
     }
 }

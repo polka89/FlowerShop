@@ -102,6 +102,12 @@
     <Compile Include="ApplicationData\categories.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationData\bouquet_templates.cs" />
+    <Compile Include="ApplicationData\deliveries.cs" />
+    <Compile Include="ApplicationData\discounts.cs" />
+    <Compile Include="ApplicationData\employees.cs" />
+    <Compile Include="ApplicationData\inventory_batches.cs" />
+    <Compile Include="ApplicationData\suppliers.cs" />
     <Compile Include="ApplicationData\customers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
