@@ -24,11 +24,10 @@ namespace FlowerShop.Pages
                 return;
             }
 
-            var user = AppConnect.model01.customers
-                .ToList()
-                .FirstOrDefault(c => TryParseAuth(c.address, out string customerLogin, out string customerPassword, out _) &&
-                                     customerLogin.Equals(login, StringComparison.OrdinalIgnoreCase) &&
-                                     customerPassword == password);
+            // Исправлено: customers -> Users
+            var user = AppConnect.model01.Users
+                .FirstOrDefault(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase) &&
+                                     u.Password == password);
 
             if (user == null)
             {
@@ -36,45 +35,21 @@ namespace FlowerShop.Pages
                 return;
             }
 
-            TryParseAuth(user.address, out _, out _, out string role);
+            // Устанавливаем роль на основе RoleId
+            var role = AppConnect.model01.Roles.FirstOrDefault(r => r.Id == user.RoleId);
             AppSession.CurrentUser = user;
-            AppSession.CurrentRole = string.IsNullOrWhiteSpace(role) ? "user" : role.ToLower();
-            user.last_login = DateTime.Now;
-            AppConnect.model01.SaveChanges();
+            AppSession.CurrentRole = role?.Name ?? "user";
 
+            // Убираем SaveChanges() так как у ShopModel его нет
+            // user.last_login = DateTime.Now; // Если нужно, добавьте поле LastLogin в класс User
+
+            MessageBox.Show($"Добро пожаловать, {user.FullName}!");
             AppFrame.frmMain.Navigate(new PageTask());
         }
 
         private void BtnGoRegister_Click(object sender, RoutedEventArgs e)
         {
             AppFrame.frmMain.Navigate(new Reg());
-        }
-
-        private bool TryParseAuth(string addressData, out string login, out string password, out string role)
-        {
-            login = string.Empty;
-            password = string.Empty;
-            role = "user";
-
-            if (string.IsNullOrWhiteSpace(addressData))
-            {
-                return false;
-            }
-
-            string[] parts = addressData.Split('|');
-            if (parts.Length < 2)
-            {
-                return false;
-            }
-
-            login = parts[0];
-            password = parts[1];
-            if (parts.Length > 2)
-            {
-                role = parts[2];
-            }
-
-            return true;
         }
     }
 }
