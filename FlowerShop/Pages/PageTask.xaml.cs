@@ -119,6 +119,17 @@ namespace FlowerShop.Pages
             }
         }
 
+        private void BtnAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppSession.CurrentRole != "admin")
+            {
+                MessageBox.Show("Раздел доступен только администратору.");
+                return;
+            }
+
+            AppFrame.frmMain.Navigate(new AdminPanel());
+        }
+
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (AppSession.CurrentRole != "admin")
