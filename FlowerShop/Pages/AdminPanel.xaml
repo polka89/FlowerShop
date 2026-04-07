@@ -1,0 +1,42 @@
+<Page x:Class="FlowerShop.Pages.AdminPanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="AdminPanel">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="🛠 Админка: 15 таблиц базы данных"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+            <Button Content="Сохранить изменения" Margin="12,0,0,0" Padding="12,6" Click="BtnSave_Click"/>
+            <Button Content="Назад в каталог" Margin="8,0,0,0" Padding="12,6" Click="BtnBack_Click"/>
+        </StackPanel>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="categories"><DataGrid ItemsSource="{Binding Categories}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="flowers"><DataGrid ItemsSource="{Binding Flowers}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="customers"><DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="orders"><DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="order_items"><DataGrid ItemsSource="{Binding OrderItems}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="order_statuses"><DataGrid ItemsSource="{Binding OrderStatuses}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="payments"><DataGrid ItemsSource="{Binding Payments}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="payment_methods"><DataGrid ItemsSource="{Binding PaymentMethods}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="deliveries"><DataGrid ItemsSource="{Binding Deliveries}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="employees"><DataGrid ItemsSource="{Binding Employees}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="suppliers"><DataGrid ItemsSource="{Binding Suppliers}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="inventory_batches"><DataGrid ItemsSource="{Binding InventoryBatches}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="bouquet_templates"><DataGrid ItemsSource="{Binding BouquetTemplates}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="discounts"><DataGrid ItemsSource="{Binding Discounts}" AutoGenerateColumns="True"/></TabItem>
+            <TabItem Header="reviews"><DataGrid ItemsSource="{Binding Reviews}" AutoGenerateColumns="True"/></TabItem>
+        </TabControl>
+
+        <TextBlock Grid.Row="2" Margin="0,10,0,0" Foreground="Gray"
+                   Text="Для удаления строки выделите её и нажмите Delete, затем сохраните изменения."/>
+    </Grid>
+</Page>

@@ -28,6 +28,7 @@
             <Button Content="Список" Width="90" Margin="0,0,8,0" Click="BtnListView_Click"/>
             <Button Content="Плитка" Width="90" Margin="0,0,8,0" Click="BtnTileView_Click"/>
             <Button Content="Добавить товар" Width="130" Click="BtnAdd_Click"/>
+            <Button Content="Админка" Width="100" Margin="8,0,0,0" Click="BtnAdmin_Click"/>
         </StackPanel>
 
         <Grid Grid.Row="2">
