@@ -1,0 +1,39 @@
+<Page x:Class="FlowerShop.Pages.AdminPanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="AdminPanel">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource AccentBrush}" Padding="12" CornerRadius="10" Margin="0,0,0,12">
+            <TextBlock Text="🔐 Админ-панель Flower Shop" FontSize="22" FontWeight="Bold"/>
+        </Border>
+
+        <GroupBox Grid.Row="1" Header="Учетная запись" Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock x:Name="TbAdminInfo" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBlock Text="Доступ выдан через встроенный аккаунт admin/admin."/>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Таблицы model.cs" Margin="0,0,12,0">
+                <ListView x:Name="LvTables"/>
+            </GroupBox>
+
+            <StackPanel Grid.Column="1">
+                <Button Content="Открыть каталог" Height="36" Click="BtnCatalog_Click"/>
+                <Button Content="Выйти" Height="36" Click="BtnLogout_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

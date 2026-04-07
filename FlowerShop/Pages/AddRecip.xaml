@@ -9,6 +9,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="0,0,20,0">
+            <TextBlock Text="Добавление позиции в каталог Flower Shop 🌹" FontSize="20" FontWeight="Bold" Margin="0,0,0,14"/>
             <TextBlock Text="Название товара"/>
             <TextBox Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10"/>
 
@@ -32,7 +33,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <Border BorderThickness="1" Padding="6" Margin="0,0,0,8">
+            <Border BorderThickness="1" BorderBrush="{StaticResource AccentBrush}" Background="{StaticResource SurfaceBrush}" Padding="6" Margin="0,0,0,8">
                 <Image x:Name="ImgPreview" Height="220" Stretch="Uniform"/>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

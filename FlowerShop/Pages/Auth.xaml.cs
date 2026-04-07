@@ -24,6 +24,17 @@ namespace FlowerShop.Pages
                 return;
             }
 
+            var modelUser = AppConnect.customModel.FindUser(login, password);
+            if (modelUser != null)
+            {
+                AppSession.CurrentModelUser = modelUser;
+                AppSession.CurrentRole = AppConnect.customModel.Roles
+                    .FirstOrDefault(r => r.Id == modelUser.RoleId)?.Name ?? "user";
+                AppSession.CurrentUser = null;
+                AppFrame.frmMain.Navigate(new AdminPanel());
+                return;
+            }
+
             var user = AppConnect.model01.customers
                 .ToList()
                 .FirstOrDefault(c => TryParseAuth(c.address, out string customerLogin, out string customerPassword, out _) &&
