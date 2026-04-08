@@ -1,7 +1,8 @@
 <Page x:Class="FlowerShop.Pages.AddRecip"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="AddRecip">
+      Title="Добавление/Редактирование товара">
+
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -9,37 +10,40 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="0,0,20,0">
-            <TextBlock Text="Добавление позиции в каталог Flower Shop 🌹" FontSize="20" FontWeight="Bold" Margin="0,0,0,14"/>
-            <TextBlock Text="Название товара"/>
-            <TextBox Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10"/>
+            <TextBlock x:Name="TitleText" Text="Добавление позиции в каталог Flower Shop 🌹" 
+                       FontSize="20" FontWeight="Bold" Margin="0,0,0,14"/>
 
-            <TextBlock Text="Описание"/>
-            <TextBox Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Height="90" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,4,0,10"/>
+            <TextBlock Text="Название товара"/>
+            <TextBox x:Name="TbName" Margin="0,4,0,10"/>
 
             <TextBlock Text="Цена"/>
-            <TextBox x:Name="TbPrice" Text="{Binding price, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10"/>
+            <TextBox x:Name="TbPrice" Margin="0,4,0,10"/>
 
             <TextBlock Text="Изображение"/>
-            <TextBox Text="{Binding image_url, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,6"/>
-            <Button Content="Загрузить изображение" Click="BtnUploadImage_Click" Margin="0,0,0,10"/>
+            <TextBox x:Name="TbImageUrl" Margin="0,4,0,6"/>
+            <Button Content="📁 Загрузить изображение" Click="BtnUploadImage_Click" Margin="0,0,0,10"/>
 
             <TextBlock Text="Категория"/>
-            <ComboBox x:Name="CbCategory" DisplayMemberPath="name" SelectedValuePath="id" SelectionChanged="CbCategory_SelectionChanged" Margin="0,4,0,16"/>
+            <ComboBox x:Name="CbCategory" DisplayMemberPath="Name" SelectedValuePath="Id" 
+                      SelectionChanged="CbCategory_SelectionChanged" Margin="0,4,0,16"/>
+
+            <CheckBox x:Name="CbIsAvailable" Content="Товар в наличии" Margin="0,0,0,16"/>
 
             <StackPanel Orientation="Horizontal">
-                <Button Content="Сохранить" Width="120" Click="BtnSave_Click"/>
-                <Button Content="Назад" Width="120" Margin="10,0,0,0" Click="BtnBack_Click"/>
+                <Button x:Name="BtnSave" Content="💾 Сохранить" Width="120" Click="BtnSave_Click"/>
+                <Button Content="⬅ Назад" Width="120" Margin="10,0,0,0" Click="BtnBack_Click"/>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <Border BorderThickness="1" BorderBrush="{StaticResource AccentBrush}" Background="{StaticResource SurfaceBrush}" Padding="6" Margin="0,0,0,8">
+            <Border BorderThickness="1" BorderBrush="Gray" Background="LightGray" Padding="6" Margin="0,0,0,8">
                 <Image x:Name="ImgPreview" Height="220" Stretch="Uniform"/>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="◀" Width="40" Click="BtnPrevImage_Click"/>
                 <Button Content="▶" Width="40" Margin="10,0,0,0" Click="BtnNextImage_Click"/>
             </StackPanel>
+            <TextBlock x:Name="TbImageCounter" TextAlignment="Center" Margin="0,5,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
