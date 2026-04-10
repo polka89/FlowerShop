@@ -153,7 +153,6 @@
     <Content Include="images\convertio.in_Бордовый пион %281%29.png" />
     <Content Include="images\convertio.in_Букет из 101 пионовидной розы %281%29.png" />
     <Content Include="images\convertio.in_Букет из альстромерий.png" />
-    <Content Include="images\convertio.in_Букет из кустовых роз, альстромерий и лилии.png" />
     <Content Include="images\convertio.in_Букет из кустовых роз, альстромирий и лилии.png" />
     <Content Include="images\convertio.in_Букет нежных цветов эустома и розы.png" />
     <Content Include="images\convertio.in_Букет полевых цветов.png" />
@@ -192,9 +191,11 @@
     <Content Include="images\convertio.in_Розовый тюльпан.png" />
     <Content Include="images\convertio.in_Ромашка аптечная.png" />
     <Content Include="images\convertio.in_Ромашка крупная.png" />
+    <Content Include="images\convertio.in_Северное сияние Букет из экзотичной орхидеи с альстромерией.png" />
     <Content Include="images\convertio.in_Спатифиллум.png" />
     <Content Include="images\convertio.in_Фикус Бенджамина %281%29.png" />
     <Content Include="images\convertio.in_Хризантема мультифлора.png" />
+    <Content Include="images\букет в розовом нежном цвеье.jpg" />
     <Content Include="images\Голубая лилия.jpg" />
     <Content Include="images\красная роза.jpg" />
     <Content Include="images\красный тюльпан.jpg" />

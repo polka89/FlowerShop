@@ -74,7 +74,7 @@ namespace FlowerShop.ApplicationData
                 Price = 160,
                 CategoryId = 1,
                 IsAvailable = true,
-                ImageUrl = "converto.in_белая роза (1).png",
+                ImageUrl = "convertio.in_белая роза (1).png",
                 Rating = 4.8m,
                 DiscountPercent = 0
             });
@@ -98,7 +98,7 @@ namespace FlowerShop.ApplicationData
                 Price = 180,
                 CategoryId = 1,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Кустовая роза (1).png",
+                ImageUrl = "convertio.in_Кустовая роза (1).png",
                 Rating = 4.7m,
                 DiscountPercent = 0
             });
@@ -134,7 +134,7 @@ namespace FlowerShop.ApplicationData
                 Price = 120,
                 CategoryId = 2,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Желтый тюльпан (1).png",
+                ImageUrl = "convertio.in_Желтый тюльпан (1).png",
                 Rating = 4.5m
             });
 
@@ -156,7 +156,7 @@ namespace FlowerShop.ApplicationData
                 Price = 140,
                 CategoryId = 2,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Кьюминс тюльпан.png",
+                ImageUrl = "convertio.in_Кьюминс тюльпан.png",
                 Rating = 4.8m
             });
 
@@ -167,7 +167,7 @@ namespace FlowerShop.ApplicationData
                 Price = 120,
                 CategoryId = 2,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Белый тюльпан (1).png",
+                ImageUrl = "convertio.in_Белый тюльпан (1).png",
                 Rating = 4.6m
             });
 
@@ -190,7 +190,7 @@ namespace FlowerShop.ApplicationData
                 Price = 180,
                 CategoryId = 3,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Кустовая хризантема (1).png",
+                ImageUrl = "convertio.in_Кустовая хризантема (1).png",
                 Rating = 4.7m
             });
 
@@ -201,7 +201,7 @@ namespace FlowerShop.ApplicationData
                 Price = 220,
                 CategoryId = 3,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Крупноцветковая хризантема.png",
+                ImageUrl = "convertio.in_Крупноцветковая хризантема.png",
                 Rating = 4.8m
             });
 
@@ -246,7 +246,7 @@ namespace FlowerShop.ApplicationData
                 Price = 260,
                 CategoryId = 4,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Белый пион.png",
+                ImageUrl = "convertio.in_Белый пион.png",
                 Rating = 4.8m
             });
 
@@ -257,7 +257,7 @@ namespace FlowerShop.ApplicationData
                 Price = 280,
                 CategoryId = 4,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Бордовый пион (1).png",
+                ImageUrl = "convertio.in_Бордовый пион (1).png",
                 Rating = 4.9m,
                 DiscountPercent = 5
             });
@@ -270,7 +270,7 @@ namespace FlowerShop.ApplicationData
                 Price = 3550,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет нежных цветов эустома и розы.png",
+                ImageUrl = "convertio.in_Букет нежных цветов эустома и розы.png",
                 Rating = 4.9m
             });
 
@@ -281,7 +281,7 @@ namespace FlowerShop.ApplicationData
                 Price = 4200,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет с Ирисами и Лизиантусом.png",
+                ImageUrl = "convertio.in_Букет с Ирисами и Лизиантусом.png",
                 Rating = 4.8m
             });
 
@@ -292,7 +292,7 @@ namespace FlowerShop.ApplicationData
                 Price = 800,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет полевых цветов.png",
+                ImageUrl = "convertio.in_Букет полевых цветов.png",
                 Rating = 4.7m,
                 DiscountPercent = 10
             });
@@ -304,7 +304,7 @@ namespace FlowerShop.ApplicationData
                 Price = 6000,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет в нежном розовом цвете.png",
+                ImageUrl = "букет в розовом нежном цвете.jpg",
                 Rating = 5.0m
             });
 
@@ -315,7 +315,7 @@ namespace FlowerShop.ApplicationData
                 Price = 4600,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Северное сияние Букет из экзотичной орхидеи с альстромерией.png",
+                ImageUrl = "convertio.in_Северное сияние Букет из экзотичной орхидеи с альстромерией.png",
                 Rating = 4.9m
             });
 
@@ -326,7 +326,7 @@ namespace FlowerShop.ApplicationData
                 Price = 50600,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет из 101 пионовидной розы (1).png",
+                ImageUrl = "convertio.in_Букет из 101 пионовидной розы (1).png",
                 Rating = 5.0m
             });
 
@@ -337,7 +337,7 @@ namespace FlowerShop.ApplicationData
                 Price = 3666,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Моно букет кустовых роз.png",
+                ImageUrl = "convertio.in_Моно букет кустовых роз.png",
                 Rating = 4.8m
             });
 
@@ -348,7 +348,7 @@ namespace FlowerShop.ApplicationData
                 Price = 2300,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет из альстромерий.png",
+                ImageUrl = "convertio.in_Букет из альстромерий.png",
                 Rating = 4.7m
             });
 
@@ -359,7 +359,7 @@ namespace FlowerShop.ApplicationData
                 Price = 10500,
                 CategoryId = 5,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Букет из кустовых роз, альстромерий и лилии.png",
+                ImageUrl = "convertio.in_Букет из кустовых роз, альстромирий и лилии.png",
                 Rating = 4.9m
             });
 
@@ -371,7 +371,7 @@ namespace FlowerShop.ApplicationData
                 Price = 130,
                 CategoryId = 6,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Альстромерия розовая.png",
+                ImageUrl = "convertio.in_Альстромерия розовая.png",
                 Rating = 4.7m
             });
 
@@ -382,7 +382,7 @@ namespace FlowerShop.ApplicationData
                 Price = 130,
                 CategoryId = 6,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Альстромерия фиолетовая.png",
+                ImageUrl = "convertio.in_Альстромерия фиолетовая.png",
                 Rating = 4.8m
             });
 
@@ -393,7 +393,7 @@ namespace FlowerShop.ApplicationData
                 Price = 140,
                 CategoryId = 6,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Альстромерия белая.png",
+                ImageUrl = "convertio.in_Альстромерия белая.png",
                 Rating = 4.7m
             });
 
@@ -405,7 +405,7 @@ namespace FlowerShop.ApplicationData
                 Price = 300,
                 CategoryId = 7,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Калла белая.png",
+                ImageUrl = "convertio.in_Калла белая.png",
                 Rating = 4.9m
             });
 
@@ -416,7 +416,7 @@ namespace FlowerShop.ApplicationData
                 Price = 320,
                 CategoryId = 7,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Калла бордовая.png",
+                ImageUrl = "convertio.in_Калла бордовая.png",
                 Rating = 4.8m
             });
 
@@ -427,7 +427,7 @@ namespace FlowerShop.ApplicationData
                 Price = 300,
                 CategoryId = 7,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Калла розовая.png",
+                ImageUrl = "convertio.in_Калла розовая.png",
                 Rating = 4.9m
             });
 
@@ -495,7 +495,7 @@ namespace FlowerShop.ApplicationData
                 Price = 1300,
                 CategoryId = 9,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лилия тигровая.png",
+                ImageUrl = "convertio.in_Лилия тигровая.png",
                 Rating = 4.8m
             });
 
@@ -507,7 +507,7 @@ namespace FlowerShop.ApplicationData
                 Price = 100,
                 CategoryId = 10,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Гвоздика красная.png",
+                ImageUrl = "convertio.in_Гвоздика красная.png",
                 Rating = 4.6m
             });
 
@@ -518,7 +518,7 @@ namespace FlowerShop.ApplicationData
                 Price = 100,
                 CategoryId = 10,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Гвоздика белая.png",
+                ImageUrl = "convertio.in_Гвоздика белая.png",
                 Rating = 4.5m
             });
 
@@ -529,7 +529,7 @@ namespace FlowerShop.ApplicationData
                 Price = 110,
                 CategoryId = 10,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Гвоздика розовая.png",
+                ImageUrl = "convertio.in_Гвоздика розовая.png",
                 Rating = 4.7m
             });
 
@@ -541,7 +541,7 @@ namespace FlowerShop.ApplicationData
                 Price = 120,
                 CategoryId = 11,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лаванда узколистная.png",
+                ImageUrl = "convertio.in_Лаванда узколистная.png",
                 Rating = 4.8m
             });
 
@@ -552,7 +552,7 @@ namespace FlowerShop.ApplicationData
                 Price = 140,
                 CategoryId = 11,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лаванда французская.png",
+                ImageUrl = "convertio.in_Лаванда французская.png",
                 Rating = 4.9m
             });
 
@@ -564,7 +564,7 @@ namespace FlowerShop.ApplicationData
                 Price = 150,
                 CategoryId = 12,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Ирис синий.png",
+                ImageUrl = "convertio.in_Ирис синий.png",
                 Rating = 4.7m
             });
 
@@ -575,7 +575,7 @@ namespace FlowerShop.ApplicationData
                 Price = 150,
                 CategoryId = 12,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Ирис желтый.png",
+                ImageUrl = "convertio.in_Ирис желтый.png",
                 Rating = 4.6m
             });
 
@@ -587,7 +587,7 @@ namespace FlowerShop.ApplicationData
                 Price = 500,
                 CategoryId = 13,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Орхидея фаленопсис белая.png",
+                ImageUrl = "convertio.in_Орхидея фаленопсис белая.png",
                 Rating = 4.9m
             });
 
@@ -598,7 +598,7 @@ namespace FlowerShop.ApplicationData
                 Price = 550,
                 CategoryId = 13,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Орхидея фаленопсис розовая.png",
+                ImageUrl = "convertio.in_Орхидея фаленопсис розовая.png",
                 Rating = 4.9m
             });
 
@@ -620,7 +620,7 @@ namespace FlowerShop.ApplicationData
                 Price = 520,
                 CategoryId = 13,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Орхидея дендробиум.png",
+                ImageUrl = "convertio.in_Орхидея дендробиум.png",
                 Rating = 4.9m
             });
 
@@ -632,7 +632,7 @@ namespace FlowerShop.ApplicationData
                 Price = 180,
                 CategoryId = 14,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лизиантус белый.png",
+                ImageUrl = "convertio.in_Лизиантус белый.png",
                 Rating = 4.8m
             });
 
@@ -643,7 +643,7 @@ namespace FlowerShop.ApplicationData
                 Price = 190,
                 CategoryId = 14,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лизиантус розовый.png",
+                ImageUrl = "convertio.in_Лизиантус розовый.png",
                 Rating = 4.9m
             });
 
@@ -654,7 +654,7 @@ namespace FlowerShop.ApplicationData
                 Price = 190,
                 CategoryId = 14,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Лизиантус фиолетовый.png",
+                ImageUrl = "convertio.in_Лизиантус фиолетовый.png",
                 Rating = 4.8m
             });
 
@@ -677,7 +677,7 @@ namespace FlowerShop.ApplicationData
                 Price = 450,
                 CategoryId = 15,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Антуриум (1).png",
+                ImageUrl = "convertio.in_Антуриум (1).png",
                 Rating = 4.9m
             });
 
@@ -699,7 +699,7 @@ namespace FlowerShop.ApplicationData
                 Price = 1200,
                 CategoryId = 15,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Монстера (1).png",
+                ImageUrl = "convertio.in_Монстера (1).png",
                 Rating = 4.9m
             });
 
@@ -711,7 +711,7 @@ namespace FlowerShop.ApplicationData
                 Price = 90,
                 CategoryId = 16,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Гипсофия метельчатая.png",
+                ImageUrl = "convertio.in_Гипсофила метельчатая.png",
                 Rating = 4.5m
             });
 
@@ -722,7 +722,7 @@ namespace FlowerShop.ApplicationData
                 Price = 100,
                 CategoryId = 16,
                 IsAvailable = true,
-                ImageUrl = "converto.in_Гипсофия изящная.png",
+                ImageUrl = "convertio.in_Гипсофия изящная.png",
                 Rating = 4.6m
             });
 
