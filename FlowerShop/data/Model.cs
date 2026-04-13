@@ -722,7 +722,7 @@ namespace FlowerShop.ApplicationData
                 Price = 100,
                 CategoryId = 16,
                 IsAvailable = true,
-                ImageUrl = "convertio.in_Гипсофия изящная.png",
+                ImageUrl = "convertio.in_Гипсофила изящная.png",
                 Rating = 4.6m
             });
 

@@ -45,14 +45,24 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.8.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.8.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -149,7 +159,7 @@
     <Content Include="images\convertio.in_Антуриум %281%29.png" />
     <Content Include="images\convertio.in_белая роза %281%29.png" />
     <Content Include="images\convertio.in_Белый пион.png" />
-    <Content Include="images\convertio.in_Белый тюльпан %281%29.png" />
+    <Content Include="images\convertio.in_белый тюльпан %281%29.png" />
     <Content Include="images\convertio.in_Бордовый пион %281%29.png" />
     <Content Include="images\convertio.in_Букет из 101 пионовидной розы %281%29.png" />
     <Content Include="images\convertio.in_Букет из альстромерий.png" />
@@ -169,8 +179,8 @@
     <Content Include="images\convertio.in_Калла бордовая.png" />
     <Content Include="images\convertio.in_Калла розовая.png" />
     <Content Include="images\convertio.in_Крупноцветковая хризантема.png" />
-    <Content Include="images\convertio.in_Кустовая роза %281%29.png" />
-    <Content Include="images\convertio.in_Кустовая хризантема %281%29.png" />
+    <Content Include="images\convertio.in_кустовая роза %281%29.png" />
+    <Content Include="images\convertio.in_кустовая хризантема %281%29.png" />
     <Content Include="images\convertio.in_Кьюминс тюльпан.png" />
     <Content Include="images\convertio.in_Лаванда узколистная.png" />
     <Content Include="images\convertio.in_Лаванда французская.png" />
@@ -184,10 +194,10 @@
     <Content Include="images\convertio.in_Орхидея фаленопсис белая.png" />
     <Content Include="images\convertio.in_Орхидея фаленопсис розовая.png" />
     <Content Include="images\convertio.in_Орхидея цимбидиум.png" />
-    <Content Include="images\convertio.in_Пионовидная роза.png" />
-    <Content Include="images\convertio.in_Пионовидный тюльпан %281%29.png" />
-    <Content Include="images\convertio.in_Розовая хризантема %281%29.png" />
-    <Content Include="images\convertio.in_Розовый пион %281%29.png" />
+    <Content Include="images\convertio.in_пионовидная роза.png" />
+    <Content Include="images\convertio.in_пионовидный тюльпан %281%29.png" />
+    <Content Include="images\convertio.in_розовая хризантема %281%29.png" />
+    <Content Include="images\convertio.in_розовый пион %281%29.png" />
     <Content Include="images\convertio.in_Розовый тюльпан.png" />
     <Content Include="images\convertio.in_Ромашка аптечная.png" />
     <Content Include="images\convertio.in_Ромашка крупная.png" />
@@ -195,7 +205,7 @@
     <Content Include="images\convertio.in_Спатифиллум.png" />
     <Content Include="images\convertio.in_Фикус Бенджамина %281%29.png" />
     <Content Include="images\convertio.in_Хризантема мультифлора.png" />
-    <Content Include="images\букет в розовом нежном цвеье.jpg" />
+    <Content Include="images\букет в розовом нежном цвете.jpg" />
     <Content Include="images\Голубая лилия.jpg" />
     <Content Include="images\красная роза.jpg" />
     <Content Include="images\красный тюльпан.jpg" />

@@ -6,7 +6,7 @@
         <GroupBox Header="Вход в цветочный магазин"
                   Width="380"
                   VerticalAlignment="Center"
-                  HorizontalAlignment="Center">
+                  HorizontalAlignment="Center" FontFamily="Book Antiqua" FontSize="14">
             <StackPanel>
                 <TextBlock Text="Добро пожаловать в Flower Shop 🌷"
                            FontSize="20"
@@ -16,8 +16,8 @@
                 <TextBox x:Name="TbLogin" Margin="0,4,0,10"/>
                 <TextBlock Text="Пароль"/>
                 <PasswordBox x:Name="PbPassword" Margin="0,4,0,16"/>
-                <Button Content="Войти" Click="BtnLogin_Click" Height="34" Margin="0,0,0,10"/>
-                <Button Content="Регистрация" Click="BtnGoRegister_Click" Height="34"/>
+                <Button Content="Войти" Click="BtnLogin_Click" Height="34" Margin="0,0,0,10" FontSize="16" Background="#FFA9CC95"/>
+                <Button Content="Регистрация" Click="BtnGoRegister_Click" Height="34" Background="#FFA9CC95" FontSize="16"/>
             </StackPanel>
         </GroupBox>
     </Grid>

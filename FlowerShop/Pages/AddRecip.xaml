@@ -3,45 +3,52 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Добавление/Редактирование товара">
 
-    <Grid Margin="20">
+    <Grid Margin="20" Background="#FFFBEEEE">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="0,0,20,0">
+        <StackPanel Margin="0,0,20,0" Background="#FFFBEEEE">
             <TextBlock x:Name="TitleText" Text="Добавление позиции в каталог Flower Shop 🌹" 
-                       FontSize="20" FontWeight="Bold" Margin="0,0,0,14"/>
+                       FontSize="20" FontWeight="Bold" Margin="0,0,0,14" FontFamily="Book Antiqua"/>
 
-            <TextBlock Text="Название товара"/>
-            <TextBox x:Name="TbName" Margin="0,4,0,10"/>
+            <TextBlock Text="Название товара" FontFamily="Book Antiqua" FontSize="14" Background="#FFFBEEEE"/>
+            <TextBox x:Name="TbName" Margin="0,4,0,10" Background="Gainsboro"/>
 
-            <TextBlock Text="Цена"/>
-            <TextBox x:Name="TbPrice" Margin="0,4,0,10"/>
+            <TextBlock Text="Цена" FontFamily="Book Antiqua" FontSize="14" Background="#FFFBEEEE"/>
+            <TextBox x:Name="TbPrice" Margin="0,4,0,10" Background="Gainsboro"/>
 
-            <TextBlock Text="Изображение"/>
-            <TextBox x:Name="TbImageUrl" Margin="0,4,0,6"/>
-            <Button Content="📁 Загрузить изображение" Click="BtnUploadImage_Click" Margin="0,0,0,10"/>
+            <TextBlock Text="Изображение" FontFamily="Book Antiqua" FontSize="14" Background="#FFFBEEEE"/>
+            <TextBox x:Name="TbImageUrl" Margin="0,4,0,6" Background="Gainsboro"/>
+            <Button Content="📁 Загрузить изображение" Click="BtnUploadImage_Click" Margin="0,0,0,10" FontFamily="Book Antiqua" FontSize="14" Background="#FFAAC162" BorderBrush="#FF3E4A2E"/>
 
-            <TextBlock Text="Категория"/>
+            <TextBlock Text="Категория" FontFamily="Book Antiqua" FontSize="14" Background="Gainsboro"/>
             <ComboBox x:Name="CbCategory" DisplayMemberPath="Name" SelectedValuePath="Id" 
-                      SelectionChanged="CbCategory_SelectionChanged" Margin="0,4,0,16"/>
+                      SelectionChanged="CbCategory_SelectionChanged" Margin="0,4,0,16">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FFFFE1E1" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
 
-            <CheckBox x:Name="CbIsAvailable" Content="Товар в наличии" Margin="0,0,0,16"/>
+            <CheckBox x:Name="CbIsAvailable" Content="Товар в наличии" Margin="0,0,0,16" FontFamily="Book Antiqua" FontSize="14"/>
 
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="BtnSave" Content="💾 Сохранить" Width="120" Click="BtnSave_Click"/>
-                <Button Content="⬅ Назад" Width="120" Margin="10,0,0,0" Click="BtnBack_Click"/>
+                <Button x:Name="BtnSave" Content="💾 Сохранить" Width="120" Click="BtnSave_Click" FontFamily="Book Antiqua" Background="#FFAAC162"/>
+                <Button Content="⬅ Назад" Width="120" Margin="10,0,0,0" Click="BtnBack_Click" FontFamily="Book Antiqua" Background="#FFAAC162"/>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Background="#FFFBEEEE">
             <Border BorderThickness="1" BorderBrush="Gray" Background="LightGray" Padding="6" Margin="0,0,0,8">
                 <Image x:Name="ImgPreview" Height="220" Stretch="Uniform"/>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="◀" Width="40" Click="BtnPrevImage_Click"/>
-                <Button Content="▶" Width="40" Margin="10,0,0,0" Click="BtnNextImage_Click"/>
+                <Button Content="◀" Width="40" Click="BtnPrevImage_Click" Background="#FFAAC162" BorderBrush="#FF3E4A2E"/>
+                <Button Content="▶" Width="40" Margin="10,0,0,0" Click="BtnNextImage_Click" Background="#FFAAC162" BorderBrush="#FF3E4A2E"/>
             </StackPanel>
             <TextBlock x:Name="TbImageCounter" TextAlignment="Center" Margin="0,5,0,0"/>
         </StackPanel>
