@@ -1,0 +1,43 @@
+<Page x:Class="FlowerShop.Pages.Reg"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Reg">
+    <ScrollViewer Background="#FFFBFAFD">
+        <Grid Margin="20">
+            <GroupBox Header="Регистрация флориста / менеджера" Width="460" HorizontalAlignment="Center">
+                <StackPanel Background="#FFFBF2F5">
+                    <TextBlock Text="Создайте аккаунт в Flower Shop 🌺" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16" FontFamily="Book Antiqua"/>
+
+                    <TextBlock Text="Имя пользователя" FontFamily="Book Antiqua" FontSize="14"/>
+                    <TextBox x:Name="TbUserName" Margin="0,4,0,10" TextChanged="Input_TextChanged"/>
+
+                    <TextBlock Text="Дата рождения" FontFamily="Book Antiqua" FontSize="14"/>
+                    <DatePicker x:Name="DpBirthDate" Margin="0,4,0,10" SelectedDateChanged="Input_TextChanged"/>
+
+                    <TextBlock Text="Стаж / опыт" FontFamily="Book Antiqua" FontSize="14"/>
+                    <TextBox x:Name="TbExperience" Margin="0,4,0,10" TextChanged="Input_TextChanged"/>
+
+                    <TextBlock Text="Логин" FontFamily="Book Antiqua" FontSize="14"/>
+                    <TextBox x:Name="TbLogin" Margin="0,4,0,10" TextChanged="Input_TextChanged"/>
+
+                    <TextBlock Text="Пароль" FontFamily="Book Antiqua" FontSize="14"/>
+                    <PasswordBox x:Name="PbPassword" Margin="0,4,0,10" PasswordChanged="PasswordBoxes_PasswordChanged"/>
+
+                    <TextBlock Text="Подтверждение пароля" FontFamily="Book Antiqua" FontSize="14"/>
+                    <PasswordBox x:Name="PbPasswordConfirm" Margin="0,4,0,10" PasswordChanged="PasswordBoxes_PasswordChanged"/>
+
+                    <TextBlock Text="Почта" FontFamily="Book Antiqua" FontSize="14"/>
+                    <TextBox x:Name="TbEmail" Margin="0,4,0,10" TextChanged="Input_TextChanged"/>
+
+                    <TextBlock Text="Телефон" FontFamily="Book Antiqua" FontSize="14"/>
+                    <TextBox x:Name="TbPhone" Margin="0,4,0,16" TextChanged="Input_TextChanged"/>
+
+                    <TextBlock x:Name="TbValidation" Foreground="Red" Margin="0,0,0,10" Background="#FFFBF2F5"/>
+
+                    <Button x:Name="BtnRegister" Content="Зарегистрироваться" Height="34" IsEnabled="False" Click="BtnRegister_Click" FontFamily="Book Antiqua" Background="#FFAAC162" Width="298" FontSize="14"/>
+                    <Button Content="Назад к авторизации" Height="39" Margin="0,10,0,0" Click="BtnBack_Click" FontFamily="Book Antiqua" Background="#FFA8BB6B" FontSize="16" Width="298"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </ScrollViewer>
+</Page>

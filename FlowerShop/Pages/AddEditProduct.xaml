@@ -1,0 +1,146 @@
+﻿<Page x:Class="FlowerShop.Pages.AddEditProduct"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Добавление/Редактирование товара"
+      Background="#FFF9F9F9">
+
+    <Page.Resources>
+        <!-- Цвета из задания -->
+        <SolidColorBrush x:Key="SoftPink" Color="#F896A3"/>
+        <SolidColorBrush x:Key="PastelGreen" Color="#9C9E4A"/>
+        <SolidColorBrush x:Key="MainBlack" Color="#242021"/>
+        <SolidColorBrush x:Key="LightBrown" Color="#CCBE83"/>
+    </Page.Resources>
+
+    <Grid Margin="30" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock x:Name="TitleText" Grid.Row="0" 
+                   Text="Добавление товара"
+                   FontSize="28" FontWeight="Bold" 
+                   Foreground="{StaticResource PastelGreen}" 
+                   FontFamily="Book Antiqua"
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,25"/>
+
+        <!-- Название -->
+        <TextBlock Grid.Row="1" Text="Название товара:" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <TextBox x:Name="NameBox" Grid.Row="2" 
+                 Padding="12" FontSize="14"
+                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                 FontFamily="Book Antiqua"
+                 Margin="0,0,0,15"/>
+
+        <!-- Цена -->
+        <TextBlock Grid.Row="3" Text="Цена (₽):" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <TextBox x:Name="PriceBox" Grid.Row="4" 
+                 Padding="12" FontSize="14"
+                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                 FontFamily="Book Antiqua"
+                 Margin="0,0,0,15"/>
+
+        <!-- Категория -->
+        <TextBlock Grid.Row="5" Text="Категория:" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <ComboBox x:Name="CategoryBox" Grid.Row="6" 
+                  Padding="12" FontSize="14"
+                  Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                  DisplayMemberPath="Name" SelectedValuePath="Id"
+                  FontFamily="Book Antiqua"
+                  Margin="0,0,0,15"/>
+
+        <!-- Изображение -->
+        <TextBlock Grid.Row="7" Text="Имя файла изображения:" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <TextBox x:Name="ImageBox" Grid.Row="8" 
+                 Padding="12" FontSize="14"
+                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                 FontFamily="Book Antiqua"
+                 Margin="0,0,0,15"/>
+
+        <!-- Рейтинг -->
+        <TextBlock Grid.Row="9" Text="Рейтинг:" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <TextBox x:Name="RatingBox" Grid.Row="10" 
+                 Padding="12" FontSize="14"
+                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                 Text="4.5"
+                 FontFamily="Book Antiqua"
+                 Margin="0,0,0,15"/>
+
+        <!-- Скидка -->
+        <TextBlock Grid.Row="11" Text="Скидка (%):" FontSize="14" FontWeight="SemiBold" 
+                   Foreground="{StaticResource MainBlack}" 
+                   FontFamily="Book Antiqua"
+                   Margin="0,0,0,5"/>
+        <TextBox x:Name="DiscountBox" Grid.Row="12" 
+                 Padding="12" FontSize="14"
+                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
+                 Text="0"
+                 FontFamily="Book Antiqua"
+                 Margin="0,0,0,15"/>
+
+        <!-- В наличии -->
+        <Border Grid.Row="13" Background="{StaticResource PastelGreen}" 
+                CornerRadius="15" Padding="10,4" 
+                HorizontalAlignment="Left" Margin="0,0,0,15">
+            <CheckBox x:Name="AvailableBox" 
+                      Content="Товар в наличии" 
+                      FontSize="13" FontWeight="SemiBold"
+                      Foreground="White"
+                      IsChecked="True"
+                      FontFamily="Book Antiqua"/>
+        </Border>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="14" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button x:Name="SaveBtn" 
+                    Content="💾 Сохранить"
+                    Background="{StaticResource PastelGreen}" 
+                    Foreground="White"
+                    Width="130" Height="40" Margin="10"
+                    FontSize="14" FontWeight="SemiBold"
+                    FontFamily="Book Antiqua"
+                    Cursor="Hand" BorderThickness="0"
+                    Click="SaveBtn_Click"/>
+            <Button x:Name="CancelBtn" 
+                    Content="❌ Отмена"
+                    Background="#EEEEEE" Foreground="{StaticResource MainBlack}"
+                    Width="130" Height="40" Margin="10"
+                    FontSize="14" FontWeight="SemiBold"
+                    FontFamily="Book Antiqua"
+                    Cursor="Hand" BorderThickness="1"
+                    BorderBrush="{StaticResource PastelGreen}"
+                    Click="CancelBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

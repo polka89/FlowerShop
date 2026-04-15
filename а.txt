@@ -7,9 +7,11 @@ using System.Windows.Data;
 using System.Globalization;
 using System.IO;
 using FlowerShop.ApplicationData;
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
-using QRCoder;
 
 namespace FlowerShop.Pages
 {
@@ -76,6 +78,9 @@ namespace FlowerShop.Pages
             public decimal TotalAmount { get; set; }
             public List<FlowerProduct> Items { get; set; }
             public int OrderNumber { get; set; }
+            public string DeliveryMethod { get; set; }
+            public decimal DeliveryPrice { get; set; }
+            public string DeliveryAddress { get; set; }
         }
 
         private void LoadCategories()
@@ -135,6 +140,7 @@ namespace FlowerShop.Pages
             {
                 _cart.Add(product);
                 MessageBox.Show($"{product.Name} добавлен в корзину!", "Корзина", MessageBoxButton.OK, MessageBoxImage.Information);
+                UpdateCartDisplay();
             }
         }
 
@@ -149,9 +155,27 @@ namespace FlowerShop.Pages
             }
         }
 
-        // --------------------------------------------------------------
-        // Генерация PDF чека
-        // --------------------------------------------------------------
+        // ==================== ГЕНЕРАЦИЯ QR-КОДА ====================
+        private string CreateQRCodeImage(string text)
+        {
+            string tempFilePath = Path.GetTempFileName() + ".png";
+
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            {
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
+                using (QRCode qrCode = new QRCode(qrCodeData))
+                {
+                    using (Bitmap qrBitmap = qrCode.GetGraphic(20))
+                    {
+                        qrBitmap.Save(tempFilePath, ImageFormat.Png);
+                    }
+                }
+            }
+
+            return tempFilePath;
+        }
+
+        // ==================== СОЗДАНИЕ PDF ЧЕКА ====================
         private void CreatePdfReceipt(OrderInfo order)
         {
             try
@@ -166,43 +190,92 @@ namespace FlowerShop.Pages
                     document.Info.Author = "FLOWAAA";
 
                     PdfPage page = document.AddPage();
-                    page.Width = 400;
-                    page.Height = 600;
+                    page.Width = 450;
+                    page.Height = 750;
 
                     using (XGraphics gfx = XGraphics.FromPdfPage(page))
                     {
-                        XFont titleFont = new XFont("Arial", 18, XFontStyle.Bold);
-                        XFont headerFont = new XFont("Arial", 14, XFontStyle.Bold);
-                        XFont normalFont = new XFont("Arial", 10, XFontStyle.Regular);
-                        XFont boldFont = new XFont("Arial", 10, XFontStyle.Bold);
+                        // Шрифты
+                        XFont titleFont = new XFont("Arial", 24, XFontStyle.Bold);
+                        XFont headerFont = new XFont("Arial", 16, XFontStyle.Bold);
+                        XFont normalFont = new XFont("Arial", 11, XFontStyle.Regular);
+                        XFont boldFont = new XFont("Arial", 11, XFontStyle.Bold);
+                        XFont smallFont = new XFont("Arial", 9, XFontStyle.Regular);
+                        XFont priceFont = new XFont("Arial", 14, XFontStyle.Bold);
+                        XFont orderNumFont = new XFont("Arial", 12, XFontStyle.Bold);
+
+                        // Цвета
+                        XColor pastelGreen = XColor.FromArgb(156, 158, 74);
+                        XColor softPink = XColor.FromArgb(248, 150, 163);
+                        XColor mainBlack = XColor.FromArgb(36, 32, 33);
+                        XColor lightBrown = XColor.FromArgb(204, 190, 131);
 
                         int yPos = 30;
-                        int leftMargin = 20;
+                        int leftMargin = 30;
+                        int rightMargin = 420;
 
-                        gfx.DrawString("FLOWAAA", titleFont, XBrushes.Black,
+                        // Заголовок
+                        gfx.DrawString("FLOWAAA", titleFont, new XSolidBrush(pastelGreen),
                             new XRect(0, yPos, page.Width, 30), XStringFormats.TopCenter);
                         yPos += 35;
 
-                        gfx.DrawString("ЧЕК ЗАКАЗА", headerFont, XBrushes.Black,
+                        gfx.DrawString("Цветочный магазин", smallFont, new XSolidBrush(lightBrown),
+                            new XRect(0, yPos, page.Width, 20), XStringFormats.TopCenter);
+                        yPos += 25;
+
+                        // Линия
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
+                        yPos += 15;
+
+                        // Заголовок чека
+                        gfx.DrawString("ЧЕК ЗАКАЗА", headerFont, new XSolidBrush(mainBlack),
                             new XRect(0, yPos, page.Width, 25), XStringFormats.TopCenter);
                         yPos += 30;
 
-                        gfx.DrawLine(XPens.Black, leftMargin, yPos, page.Width - leftMargin, yPos);
+                        // Информация о заказе
+                        gfx.DrawString("Номер заказа:", boldFont, XBrushes.Black, leftMargin, yPos);
+                        gfx.DrawString($"#{order.OrderNumber}", orderNumFont, new XSolidBrush(softPink), 180, yPos);
+                        yPos += 20;
+
+                        gfx.DrawString("Дата:", boldFont, XBrushes.Black, leftMargin, yPos);
+                        gfx.DrawString(order.OrderDate, normalFont, XBrushes.Black, 180, yPos);
+                        yPos += 20;
+
+                        gfx.DrawString("Способ доставки:", boldFont, XBrushes.Black, leftMargin, yPos);
+                        gfx.DrawString(order.DeliveryMethod, normalFont, new XSolidBrush(pastelGreen), 180, yPos);
+                        yPos += 20;
+
+                        if (order.DeliveryMethod == "Доставка")
+                        {
+                            gfx.DrawString("Адрес доставки:", boldFont, XBrushes.Black, leftMargin, yPos);
+                            string address = order.DeliveryAddress.Length > 30 ? order.DeliveryAddress.Substring(0, 27) + "..." : order.DeliveryAddress;
+                            gfx.DrawString(address, normalFont, XBrushes.Black, 180, yPos);
+                            yPos += 20;
+                        }
+
+                        gfx.DrawString("Статус:", boldFont, XBrushes.Black, leftMargin, yPos);
+                        gfx.DrawString("ОПЛАЧЕН", normalFont, new XSolidBrush(pastelGreen), 180, yPos);
+                        yPos += 25;
+
+                        // Линия
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
                         yPos += 15;
 
-                        gfx.DrawString($"Номер заказа: #{order.OrderNumber}", normalFont, XBrushes.Black, leftMargin, yPos);
-                        yPos += 20;
-                        gfx.DrawString($"Дата: {order.OrderDate}", normalFont, XBrushes.Black, leftMargin, yPos);
-                        yPos += 20;
-
-                        gfx.DrawLine(XPens.Black, leftMargin, yPos, page.Width - leftMargin, yPos);
-                        yPos += 15;
-
-                        gfx.DrawString("Товар", boldFont, XBrushes.Black, leftMargin, yPos);
-                        gfx.DrawString("Кол-во", boldFont, XBrushes.Black, 220, yPos);
-                        gfx.DrawString("Цена", boldFont, XBrushes.Black, 290, yPos);
+                        // Заголовок таблицы товаров
+                        gfx.DrawString("Товары в заказе:", boldFont, XBrushes.Black, leftMargin, yPos);
                         yPos += 20;
 
+                        // Рисуем заголовки таблицы (Наименование, Кол-во, Сумма)
+                        gfx.DrawRectangle(new XSolidBrush(pastelGreen), leftMargin, yPos, 200, 18);
+                        gfx.DrawRectangle(new XSolidBrush(pastelGreen), leftMargin + 205, yPos, 70, 18);
+                        gfx.DrawRectangle(new XSolidBrush(pastelGreen), leftMargin + 280, yPos, 110, 18);
+
+                        gfx.DrawString("Наименование", boldFont, XBrushes.White, leftMargin + 5, yPos + 13);
+                        gfx.DrawString("Кол-во", boldFont, XBrushes.White, leftMargin + 235, yPos + 13);
+                        gfx.DrawString("Сумма", boldFont, XBrushes.White, leftMargin + 325, yPos + 13);
+                        yPos += 25;
+
+                        // Группировка товаров (рисуем ниже заголовков)
                         var grouped = order.Items
                             .GroupBy(x => x.Id)
                             .Select(g => new { Product = g.First(), Quantity = g.Count() })
@@ -211,32 +284,85 @@ namespace FlowerShop.Pages
                         foreach (var item in grouped)
                         {
                             decimal total = item.Product.Price * item.Quantity;
-                            string name = item.Product.Name.Length > 25 ? item.Product.Name.Substring(0, 22) + "..." : item.Product.Name;
+                            string name = item.Product.Name.Length > 28 ? item.Product.Name.Substring(0, 25) + "..." : item.Product.Name;
+
                             gfx.DrawString(name, normalFont, XBrushes.Black, leftMargin, yPos);
-                            gfx.DrawString($"{item.Quantity} шт.", normalFont, XBrushes.Black, 220, yPos);
-                            gfx.DrawString($"{total:N0} ₽", normalFont, XBrushes.Black, 290, yPos);
-                            yPos += 18;
+                            gfx.DrawString($"{item.Quantity} шт.", normalFont, XBrushes.Black, leftMargin + 230, yPos);
+                            gfx.DrawString($"{total:N0} ₽", normalFont, XBrushes.Black, leftMargin + 330, yPos);
+                            yPos += 20; // Увеличил отступ между товарами
                         }
 
                         yPos += 10;
-                        gfx.DrawLine(XPens.Black, leftMargin, yPos, page.Width - leftMargin, yPos);
+
+                        // Линия перед итогом
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
                         yPos += 15;
 
-                        gfx.DrawString("ИТОГО:", boldFont, XBrushes.Black, 200, yPos);
-                        gfx.DrawString($"{order.TotalAmount:N0} ₽", boldFont, XBrushes.Purple, 290, yPos);
-                        yPos += 30;
+                        // Сумма товаров
+                        gfx.DrawString("Сумма товаров:", normalFont, XBrushes.Black, leftMargin + 180, yPos);
+                        gfx.DrawString($"{order.TotalAmount:N0} ₽", normalFont, XBrushes.Black, leftMargin + 340, yPos);
+                        yPos += 20;
 
-                        gfx.DrawString("Спасибо за покупку!", normalFont, XBrushes.Black,
+                        // Доставка
+                        if (order.DeliveryPrice > 0)
+                        {
+                            gfx.DrawString("Доставка:", normalFont, XBrushes.Black, leftMargin + 180, yPos);
+                            gfx.DrawString($"{order.DeliveryPrice:N0} ₽", normalFont, XBrushes.Black, leftMargin + 340, yPos);
+                            yPos += 20;
+                        }
+
+                        // Линия перед итогом
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
+                        yPos += 15;
+
+                        // Итог
+                        decimal finalTotal = order.TotalAmount + order.DeliveryPrice;
+                        gfx.DrawString("ИТОГО К ОПЛАТЕ:", boldFont, XBrushes.Black, leftMargin + 180, yPos);
+                        gfx.DrawString($"{finalTotal:N0} ₽", priceFont, new XSolidBrush(pastelGreen), leftMargin + 340, yPos);
+                        yPos += 40;
+
+                        // Линия
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
+                        yPos += 20;
+
+                        // QR-код
+                        gfx.DrawString("Отсканируйте QR-код", boldFont, XBrushes.Black,
+                            new XRect(0, yPos, page.Width, 20), XStringFormats.TopCenter);
+                        yPos += 15;
+                        gfx.DrawString("для получения информации о заказе", smallFont, new XSolidBrush(lightBrown),
+                            new XRect(0, yPos, page.Width, 20), XStringFormats.TopCenter);
+                        yPos += 15;
+
+                        // Генерация QR-кода
+                        string qrText = $"Заказ №{order.OrderNumber}\nДата: {order.OrderDate}\nСумма товаров: {order.TotalAmount:N0} ₽\nДоставка: {order.DeliveryMethod}\nИтого: {finalTotal:N0} ₽\nСпасибо за покупку в FLOWAAA!";
+
+                        string tempQrPath = CreateQRCodeImage(qrText);
+                        XImage qrImage = XImage.FromFile(tempQrPath);
+                        int qrSize = 120;
+                        int qrX = (int)((page.Width - qrSize) / 2);
+                        gfx.DrawImage(qrImage, qrX, yPos, qrSize, qrSize);
+                        qrImage.Dispose();
+                        File.Delete(tempQrPath);
+
+                        yPos += 130;
+
+                        // Благодарность
+                        gfx.DrawString("Спасибо за покупку!", boldFont, new XSolidBrush(pastelGreen),
                             new XRect(0, yPos, page.Width, 20), XStringFormats.TopCenter);
                         yPos += 20;
-                        gfx.DrawString("Ждем вас снова в FLOWAAA", normalFont, XBrushes.Gray,
+                        gfx.DrawString("Ждем вас снова в FLOWAAA", smallFont, new XSolidBrush(lightBrown),
                             new XRect(0, yPos, page.Width, 20), XStringFormats.TopCenter);
+                        yPos += 20;
+
+                        // Нижняя линия
+                        gfx.DrawLine(new XPen(lightBrown, 1), leftMargin, yPos, rightMargin, yPos);
                     }
 
                     document.Save(filePath);
                 }
 
                 System.Diagnostics.Process.Start("explorer.exe", "/select," + filePath);
+                MessageBox.Show($"PDF чек сохранен на рабочий стол!\n{fileName}", "PDF Чек", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -244,103 +370,144 @@ namespace FlowerShop.Pages
             }
         }
 
-        // --------------------------------------------------------------
-        // Показать окно "Спасибо" с QR-кодом
-        // --------------------------------------------------------------
-        private void ShowThankYouWindow(int orderNumber, decimal totalAmount)
+        // ==================== ОКОШКО ВЫБОРА ДОСТАВКИ ====================
+        private bool ShowDeliveryDialog(out string deliveryMethod, out string deliveryAddress)
         {
-            // Ссылка на страницу отзыва (замените на реальную)
-            string reviewLink = "https://forms.gle/ваша_ссылка_на_отзыв";
+            string tempDeliveryMethod = "Самовывоз";
+            string tempDeliveryAddress = "";
 
-            Window thankYouWindow = new Window
+            Window dialog = new Window
             {
-                Title = "Спасибо за заказ!",
+                Title = "Выберите способ получения",
                 Width = 400,
-                Height = 500,
+                Height = 350,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 ResizeMode = ResizeMode.NoResize,
                 Background = System.Windows.Media.Brushes.White
             };
 
-            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            StackPanel panel = new StackPanel { Margin = new Thickness(20) };
+
+            panel.Children.Add(new TextBlock
             {
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(reviewLink, QRCodeGenerator.ECCLevel.Q);
-                using (QRCode qrCode = new QRCode(qrCodeData))
+                Text = "Способ получения заказа",
+                FontSize = 18,
+                FontWeight = FontWeights.Bold,
+                Foreground = (System.Windows.Media.Brush)this.Resources["PastelGreen"],
+                Margin = new Thickness(0, 0, 0, 15)
+            });
+
+            RadioButton pickupRadio = new RadioButton
+            {
+                Content = "🏪 Самовывоз (бесплатно)",
+                FontSize = 14,
+                Margin = new Thickness(0, 5, 0, 5),
+                IsChecked = true
+            };
+
+            RadioButton deliveryRadio = new RadioButton
+            {
+                Content = "🚚 Доставка (+500 ₽)",
+                FontSize = 14,
+                Margin = new Thickness(0, 5, 0, 5)
+            };
+
+            panel.Children.Add(pickupRadio);
+            panel.Children.Add(deliveryRadio);
+
+            // Поле для адреса (изначально скрыто)
+            TextBlock addressLabel = new TextBlock
+            {
+                Text = "Адрес доставки:",
+                FontSize = 12,
+                FontWeight = FontWeights.SemiBold,
+                Margin = new Thickness(0, 15, 0, 5),
+                Visibility = Visibility.Collapsed
+            };
+
+            TextBox addressBox = new TextBox
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Padding = new Thickness(8),
+                FontSize = 12,
+                Visibility = Visibility.Collapsed
+            };
+            addressBox.Tag = "Улица, дом, квартира, подъезд";
+
+            panel.Children.Add(addressLabel);
+            panel.Children.Add(addressBox);
+
+            deliveryRadio.Checked += (s, e) =>
+            {
+                addressLabel.Visibility = Visibility.Visible;
+                addressBox.Visibility = Visibility.Visible;
+            };
+
+            pickupRadio.Checked += (s, e) =>
+            {
+                addressLabel.Visibility = Visibility.Collapsed;
+                addressBox.Visibility = Visibility.Collapsed;
+            };
+
+            // Кнопки
+            StackPanel buttonPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 20, 0, 0) };
+
+            Button okBtn = new Button
+            {
+                Content = "Оформить",
+                Width = 100,
+                Height = 35,
+                Margin = new Thickness(5),
+                Background = (System.Windows.Media.Brush)this.Resources["PastelGreen"],
+                Foreground = System.Windows.Media.Brushes.White,
+                BorderThickness = new Thickness(0),
+                Cursor = System.Windows.Input.Cursors.Hand
+            };
+
+            Button cancelBtn = new Button
+            {
+                Content = "Отмена",
+                Width = 100,
+                Height = 35,
+                Margin = new Thickness(5),
+                Background = System.Windows.Media.Brushes.LightGray,
+                Foreground = System.Windows.Media.Brushes.Black,
+                BorderThickness = new Thickness(0),
+                Cursor = System.Windows.Input.Cursors.Hand
+            };
+
+            buttonPanel.Children.Add(okBtn);
+            buttonPanel.Children.Add(cancelBtn);
+            panel.Children.Add(buttonPanel);
+
+            dialog.Content = panel;
+
+            bool result = false;
+            okBtn.Click += (s, e) =>
+            {
+                if (deliveryRadio.IsChecked == true && string.IsNullOrWhiteSpace(addressBox.Text))
                 {
-                    System.Drawing.Bitmap qrBitmap = qrCode.GetGraphic(20);
-                    using (MemoryStream memory = new MemoryStream())
-                    {
-                        qrBitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-                        memory.Position = 0;
-                        System.Windows.Media.Imaging.BitmapImage bitmapImage = new System.Windows.Media.Imaging.BitmapImage();
-                        bitmapImage.BeginInit();
-                        bitmapImage.StreamSource = memory;
-                        bitmapImage.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-                        bitmapImage.EndInit();
-
-                        StackPanel panel = new StackPanel { Margin = new Thickness(20) };
-                        panel.Children.Add(new TextBlock
-                        {
-                            Text = $"✅ Заказ №{orderNumber} оформлен!",
-                            FontSize = 18,
-                            FontWeight = FontWeights.Bold,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 10)
-                        });
-                        panel.Children.Add(new TextBlock
-                        {
-                            Text = $"Сумма: {totalAmount:N0} ₽",
-                            FontSize = 14,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 20)
-                        });
-
-                        Image qrImage = new Image
-                        {
-                            Source = bitmapImage,
-                            Width = 200,
-                            Height = 200,
-                            Margin = new Thickness(0, 0, 0, 20),
-                            HorizontalAlignment = HorizontalAlignment.Center
-                        };
-                        panel.Children.Add(qrImage);
-
-                        panel.Children.Add(new TextBlock
-                        {
-                            Text = "Отсканируйте QR-код, чтобы оставить отзыв",
-                            FontSize = 12,
-                            Foreground = System.Windows.Media.Brushes.Gray,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15)
-                        });
-
-                        Button closeBtn = new Button
-                        {
-                            Content = "Закрыть",
-                            Width = 100,
-                            Height = 35,
-                            Margin = new Thickness(0, 10, 0, 0),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Background = (System.Windows.Media.Brush)this.Resources["PastelGreen"],
-                            Foreground = System.Windows.Media.Brushes.White,
-                            BorderThickness = new Thickness(0),
-                            Cursor = System.Windows.Input.Cursors.Hand
-                        };
-                        closeBtn.Click += (s, e) => thankYouWindow.Close();
-                        panel.Children.Add(closeBtn);
-
-                        thankYouWindow.Content = panel;
-                    }
+                    MessageBox.Show("Пожалуйста, укажите адрес доставки!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
-            }
 
-            thankYouWindow.Owner = Window.GetWindow(this);
-            thankYouWindow.ShowDialog();
+                tempDeliveryMethod = pickupRadio.IsChecked == true ? "Самовывоз" : "Доставка";
+                tempDeliveryAddress = addressBox.Text;
+                result = true;
+                dialog.Close();
+            };
+
+            cancelBtn.Click += (s, e) => dialog.Close();
+
+            dialog.Owner = Window.GetWindow(this);
+            dialog.ShowDialog();
+
+            deliveryMethod = tempDeliveryMethod;
+            deliveryAddress = tempDeliveryAddress;
+            return result;
         }
 
-        // --------------------------------------------------------------
-        // Оформление заказа
-        // --------------------------------------------------------------
+        // ==================== ОФОРМЛЕНИЕ ЗАКАЗА ====================
         private void BtnCheckout_Click(object sender, RoutedEventArgs e)
         {
             if (_cart.Count == 0)
@@ -349,8 +516,15 @@ namespace FlowerShop.Pages
                 return;
             }
 
+            // Показываем диалог выбора доставки
+            if (!ShowDeliveryDialog(out string deliveryMethod, out string deliveryAddress))
+            {
+                return; // Пользователь отменил
+            }
+
             int orderNumber = _orders.Count + 1;
             decimal totalAmount = _cart.Sum(p => p.Price);
+            decimal deliveryPrice = deliveryMethod == "Доставка" ? 500 : 0;
 
             var order = new OrderInfo
             {
@@ -358,17 +532,20 @@ namespace FlowerShop.Pages
                 OrderDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm"),
                 ItemsCount = $"{_cart.Count} товара(ов)",
                 TotalAmount = totalAmount,
-                Items = new List<FlowerProduct>(_cart)
+                Items = new List<FlowerProduct>(_cart),
+                DeliveryMethod = deliveryMethod,
+                DeliveryPrice = deliveryPrice,
+                DeliveryAddress = deliveryAddress
             };
 
             _orders.Add(order);
-            CreatePdfReceipt(order);               // PDF чек
             _cart.Clear();
             UpdateCartDisplay();
 
-            ShowThankYouWindow(orderNumber, totalAmount);   // QR-окно
+            // СОЗДАЁМ PDF ЧЕК
+            CreatePdfReceipt(order);
 
-            MessageBox.Show($"Заказ №{orderNumber} оформлен!\nЧек сохранен на рабочий стол.",
+            MessageBox.Show($"Заказ №{orderNumber} оформлен!\nСпособ получения: {deliveryMethod}\nPDF чек сохранен на рабочий стол.",
                 "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 
             BtnBackToCatalog_Click(sender, e);
@@ -392,7 +569,8 @@ namespace FlowerShop.Pages
         {
             CartListBox.ItemsSource = null;
             CartListBox.ItemsSource = _cart;
-            CartTotalText.Text = $"{_cart.Sum(p => p.Price):N0} ₽";
+            decimal total = _cart.Sum(p => p.Price);
+            CartTotalText.Text = $"{total:N0} ₽";
         }
 
         private void UpdateHistoryDisplay()
@@ -401,9 +579,15 @@ namespace FlowerShop.Pages
             HistoryListBox.ItemsSource = _orders;
         }
 
-        // --------------------------------------------------------------
-        // Кнопки управления (добавить, редактировать, удалить, назад)
-        // --------------------------------------------------------------
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены, что хотите выйти?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                NavigationService?.Navigate(new Auth());
+            }
+        }
+
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Добавление товара", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
