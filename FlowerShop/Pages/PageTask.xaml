@@ -6,8 +6,12 @@
       Loaded="Page_Loaded">
 
     <Page.Resources>
-        <!-- Конвертер для изображений -->
-        <local:ImagePathConverter x:Key="ImageConverter"/>
+        <!-- Конвертеры -->
+        <local:ImagePathConverter x:Key="ImagePathConverter"/>
+        <local:AvailabilityTextConverter x:Key="AvailabilityTextConverter"/>
+        <local:AvailabilityColorConverter x:Key="AvailabilityColorConverter"/>
+        <local:ImageConverter x:Key="ImageConverter"/>
+        <local:StockColorConverter x:Key="StockColorConverter"/>
 
         <!-- Конвертер Bool в Visibility -->
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -18,7 +22,7 @@
         <SolidColorBrush x:Key="MainBlack" Color="#242021"/>
         <SolidColorBrush x:Key="LightBrown" Color="#CCBE83"/>
 
-        <!-- Стиль для кнопок категорий (вертикальные) -->
+        <!-- Стиль для кнопок категорий -->
         <Style x:Key="CategoryButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{StaticResource MainBlack}"/>
@@ -122,16 +126,16 @@
             <Setter Property="BorderBrush" Value="{StaticResource PastelGreen}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="45"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="20">
+                                CornerRadius="22.5">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -154,7 +158,7 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.1" Color="Black"/>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.08" Color="Black"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -178,14 +182,14 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="32"/>
+            <Setter Property="Height" Value="36"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                CornerRadius="15">
+                                CornerRadius="18">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -212,7 +216,7 @@
                 <TextBlock Text="🌸 FLOWWOW" FontSize="24" FontWeight="Bold" 
                            Foreground="{StaticResource MainBlack}" 
                            FontFamily="Book Antiqua"
-                           Margin="0,0,0,20"
+                           Margin="0,0,0,25"
                            TextAlignment="Center"/>
 
                 <TextBlock Text="Выбрать категорию" FontSize="16" FontWeight="SemiBold" 
@@ -251,7 +255,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Шапка с иконками -->
@@ -261,6 +264,8 @@
                             Click="BtnCart_Click" ToolTip="Корзина"/>
                     <Button x:Name="BtnHistory" Content="📋" Style="{StaticResource IconButtonStyle}" 
                             Click="BtnHistory_Click" Margin="10,0,0,0" ToolTip="История заказов"/>
+                    <Button x:Name="BtnLogout" Content="🚪" Style="{StaticResource IconButtonStyle}" 
+                            Click="BtnLogout_Click" Margin="10,0,0,0" ToolTip="Выход"/>
                 </StackPanel>
 
                 <!-- Каталог товаров -->
@@ -296,7 +301,6 @@
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                                 <TextBlock Text="★" Foreground="#FFB800" FontSize="13"/>
                                                 <TextBlock Text="{Binding RatingText}" Foreground="#888" FontSize="12" Margin="4,0,0,0"/>
-                                                <TextBlock Text="тыс." Foreground="{StaticResource LightBrown}" FontSize="10" Margin="2,0,0,0"/>
                                             </StackPanel>
 
                                             <TextBlock Text="{Binding Price, StringFormat={}{0:N0} ₽}" FontSize="20" FontWeight="Bold" 
@@ -347,13 +351,14 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Image Source="{Binding ImageUrl, Converter={StaticResource ImageConverter}}" 
+                                                <Image Source="{Binding Product.ImageUrl, Converter={StaticResource ImageConverter}}" 
                                                        Width="60" Height="60" Stretch="Uniform"/>
                                                 <StackPanel Grid.Column="1" Margin="10,0">
-                                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold"/>
-                                                    <TextBlock Text="{Binding Price, StringFormat={}{0:N0} ₽}" FontSize="12" Foreground="{StaticResource PastelGreen}"/>
+                                                    <TextBlock Text="{Binding Product.Name}" FontSize="14" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="{Binding Product.Price, StringFormat={}{0:N0} ₽}" FontSize="12" Foreground="{StaticResource PastelGreen}"/>
+                                                    <TextBlock Text="Количество: {Binding Quantity}" FontSize="11" Foreground="#666"/>
                                                 </StackPanel>
-                                                <Button Grid.Column="2" Content="🗑" Background="Transparent" Foreground="{StaticResource SoftPink}" BorderThickness="0" FontSize="16" Cursor="Hand" Click="RemoveFromCart_Click" Tag="{Binding}"/>
+                                                <Button Grid.Column="2" Content="🗑" Background="Transparent" Foreground="{StaticResource SoftPink}" BorderThickness="0" FontSize="18" Cursor="Hand" Click="RemoveFromCart_Click" Tag="{Binding}"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
@@ -364,7 +369,7 @@
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <TextBlock Text="Итого: " FontSize="18" FontWeight="SemiBold"/>
-                                <TextBlock x:Name="CartTotalText" Text="0 ₽" FontSize="20" FontWeight="Bold" Foreground="{StaticResource PastelGreen}"/>
+                                <TextBlock x:Name="CartTotalText" Text="0 ₽" FontSize="22" FontWeight="Bold" Foreground="{StaticResource PastelGreen}"/>
                             </StackPanel>
 
                             <Button x:Name="BtnCheckout" Content="Оформить заказ ✅" Style="{StaticResource ActionButtonStyle}" Width="200" Margin="0,15,0,0" Click="BtnCheckout_Click"/>
@@ -405,8 +410,8 @@
                     </Border>
                 </Border>
 
-                <!-- Кнопки действий -->
-                <Border Grid.Row="2" Background="White" CornerRadius="20" Padding="12" Margin="0,0,0,20" BorderBrush="#EEEEEE" BorderThickness="1">
+                <!-- Кнопки действий администратора -->
+                <Border Grid.Row="2" Background="White" CornerRadius="20" Padding="12" Margin="0,20,0,0" BorderBrush="#EEEEEE" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="BtnAdd" Content="➕ Добавить" Style="{StaticResource ActionButtonStyle}" Click="BtnAdd_Click"/>
                         <Button x:Name="BtnEdit" Content="✏️ Редактировать" Style="{StaticResource ActionButtonStyle}" Click="BtnEdit_Click"/>

@@ -1,17 +1,28 @@
+using FlowerShop.ApplicationData;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using FlowerShop.ApplicationData;
 
 namespace FlowerShop.Pages
 {
     public partial class Reg : Page
     {
+        private static string usersFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "users.json");
+
         public Reg()
         {
             InitializeComponent();
+
+            // Создаем файл если не существует
+            if (!File.Exists(usersFilePath))
+            {
+                File.WriteAllText(usersFilePath, "[]");
+            }
         }
 
         private void Input_TextChanged(object sender, EventArgs e)
@@ -80,8 +91,8 @@ namespace FlowerShop.Pages
             }
             else
             {
-                var existingUser = AppConnect.model01.Users
-                    .FirstOrDefault(u => u.Login.Equals(TbLogin.Text, StringComparison.OrdinalIgnoreCase));
+                var users = LoadUsers();
+                var existingUser = users.FirstOrDefault(u => u.Login.Equals(TbLogin.Text, StringComparison.OrdinalIgnoreCase));
 
                 if (existingUser != null)
                 {
@@ -155,25 +166,62 @@ namespace FlowerShop.Pages
             return digits.Length == 11;
         }
 
+        private List<UserJson> LoadUsers()
+        {
+            try
+            {
+                string json = File.ReadAllText(usersFilePath);
+                return JsonSerializer.Deserialize<List<UserJson>>(json) ?? new List<UserJson>();
+            }
+            catch
+            {
+                return new List<UserJson>();
+            }
+        }
+
+        private void SaveUsers(List<UserJson> users)
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(users, options);
+            File.WriteAllText(usersFilePath, json);
+        }
+
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                User newUser = new User
+                var users = LoadUsers();
+
+                // Проверяем, не существует ли уже пользователь с таким логином
+                if (users.Any(u => u.Login == TbLogin.Text))
                 {
-                    Id = AppConnect.model01.Users.Count + 1,
+                    MessageBox.Show("Пользователь с таким логином уже существует!",
+                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Создаем нового пользователя
+                UserJson newUser = new UserJson
+                {
+                    Id = users.Count > 0 ? users.Max(u => u.Id) + 1 : 1,
                     FullName = TbUserName.Text,
                     Login = TbLogin.Text,
                     Password = PbPassword.Password,
                     RoleId = 3,
-                    CreatedAt = DateTime.Now
+                    BirthDate = DpBirthDate.SelectedDate?.ToString("yyyy-MM-dd"),
+                    Experience = TbExperience.Text,
+                    Email = TbEmail.Text,
+                    Phone = TbPhone.Text,
+                    CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 };
 
-                AppConnect.model01.Users.Add(newUser);
+                users.Add(newUser);
+                SaveUsers(users);
 
                 MessageBox.Show("Регистрация успешно завершена!\nТеперь вы можете войти в систему.",
                     "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                // Переходим на страницу авторизации
                 AppFrame.frmMain.Navigate(new Auth());
             }
             catch (Exception ex)
@@ -187,5 +235,20 @@ namespace FlowerShop.Pages
         {
             AppFrame.frmMain.Navigate(new Auth());
         }
+    }
+
+    // Класс для хранения пользователя в JSON
+    public class UserJson
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public int RoleId { get; set; }
+        public string BirthDate { get; set; }
+        public string Experience { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string CreatedAt { get; set; }
     }
 }
