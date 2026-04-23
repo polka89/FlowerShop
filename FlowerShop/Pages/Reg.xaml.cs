@@ -12,17 +12,9 @@ namespace FlowerShop.Pages
 {
     public partial class Reg : Page
     {
-        private static string usersFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "users.json");
-
         public Reg()
         {
             InitializeComponent();
-
-            // Создаем файл если не существует
-            if (!File.Exists(usersFilePath))
-            {
-                File.WriteAllText(usersFilePath, "[]");
-            }
         }
 
         private void Input_TextChanged(object sender, EventArgs e)
@@ -91,10 +83,7 @@ namespace FlowerShop.Pages
             }
             else
             {
-                var users = LoadUsers();
-                var existingUser = users.FirstOrDefault(u => u.Login.Equals(TbLogin.Text, StringComparison.OrdinalIgnoreCase));
-
-                if (existingUser != null)
+                if (UserService.IsLoginExists(TbLogin.Text))
                 {
                     isValid = false;
                     errorMessage += "• Пользователь с таким логином уже существует\n";
@@ -166,44 +155,19 @@ namespace FlowerShop.Pages
             return digits.Length == 11;
         }
 
-        private List<UserJson> LoadUsers()
-        {
-            try
-            {
-                string json = File.ReadAllText(usersFilePath);
-                return JsonSerializer.Deserialize<List<UserJson>>(json) ?? new List<UserJson>();
-            }
-            catch
-            {
-                return new List<UserJson>();
-            }
-        }
-
-        private void SaveUsers(List<UserJson> users)
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(users, options);
-            File.WriteAllText(usersFilePath, json);
-        }
-
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var users = LoadUsers();
-
-                // Проверяем, не существует ли уже пользователь с таким логином
-                if (users.Any(u => u.Login == TbLogin.Text))
+                if (UserService.IsLoginExists(TbLogin.Text))
                 {
                     MessageBox.Show("Пользователь с таким логином уже существует!",
                         "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                // Создаем нового пользователя
-                UserJson newUser = new UserJson
+                var newUser = new UserJson
                 {
-                    Id = users.Count > 0 ? users.Max(u => u.Id) + 1 : 1,
                     FullName = TbUserName.Text,
                     Login = TbLogin.Text,
                     Password = PbPassword.Password,
@@ -211,18 +175,15 @@ namespace FlowerShop.Pages
                     BirthDate = DpBirthDate.SelectedDate?.ToString("yyyy-MM-dd"),
                     Experience = TbExperience.Text,
                     Email = TbEmail.Text,
-                    Phone = TbPhone.Text,
-                    CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    Phone = TbPhone.Text
                 };
 
-                users.Add(newUser);
-                SaveUsers(users);
+                UserService.SaveUser(newUser);
 
                 MessageBox.Show("Регистрация успешно завершена!\nТеперь вы можете войти в систему.",
                     "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Переходим на страницу авторизации
-                AppFrame.frmMain.Navigate(new Auth());
+                NavigationService?.Navigate(new Auth());
             }
             catch (Exception ex)
             {
@@ -250,5 +211,54 @@ namespace FlowerShop.Pages
         public string Email { get; set; }
         public string Phone { get; set; }
         public string CreatedAt { get; set; }
+    }
+
+    // ==================== СЕРВИС ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЯМИ ====================
+    public static class UserService
+    {
+        private static string _usersFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "users.json");
+        private static readonly object _lock = new object();
+
+        public static List<UserJson> GetAllUsers()
+        {
+            lock (_lock)
+            {
+                if (!File.Exists(_usersFilePath))
+                    return new List<UserJson>();
+
+                string json = File.ReadAllText(_usersFilePath);
+                return JsonSerializer.Deserialize<List<UserJson>>(json) ?? new List<UserJson>();
+            }
+        }
+
+        public static void SaveUser(UserJson user)
+        {
+            lock (_lock)
+            {
+                var users = GetAllUsers();
+
+                // Генерируем новый ID
+                user.Id = users.Count > 0 ? users.Max(u => u.Id) + 1 : 1;
+                user.CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                users.Add(user);
+
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(users, options);
+                File.WriteAllText(_usersFilePath, json);
+            }
+        }
+
+        public static UserJson FindUser(string login, string password)
+        {
+            var users = GetAllUsers();
+            return users.FirstOrDefault(u => u.Login == login && u.Password == password);
+        }
+
+        public static bool IsLoginExists(string login)
+        {
+            var users = GetAllUsers();
+            return users.Any(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

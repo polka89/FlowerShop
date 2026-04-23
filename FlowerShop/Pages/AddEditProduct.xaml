@@ -5,7 +5,6 @@
       Background="#FFF9F9F9">
 
     <Page.Resources>
-        <!-- Цвета из задания -->
         <SolidColorBrush x:Key="SoftPink" Color="#F896A3"/>
         <SolidColorBrush x:Key="PastelGreen" Color="#9C9E4A"/>
         <SolidColorBrush x:Key="MainBlack" Color="#242021"/>
@@ -26,13 +25,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <TextBlock x:Name="TitleText" Grid.Row="0" 
+        <TextBlock x:Name="TitleTextBlock" Grid.Row="0" 
                    Text="Добавление товара"
                    FontSize="28" FontWeight="Bold" 
                    Foreground="{StaticResource PastelGreen}" 
@@ -45,7 +41,7 @@
                    Foreground="{StaticResource MainBlack}" 
                    FontFamily="Book Antiqua"
                    Margin="0,0,0,5"/>
-        <TextBox x:Name="NameBox" Grid.Row="2" 
+        <TextBox x:Name="TbName" Grid.Row="2" 
                  Padding="12" FontSize="14"
                  Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
                  FontFamily="Book Antiqua"
@@ -56,7 +52,7 @@
                    Foreground="{StaticResource MainBlack}" 
                    FontFamily="Book Antiqua"
                    Margin="0,0,0,5"/>
-        <TextBox x:Name="PriceBox" Grid.Row="4" 
+        <TextBox x:Name="TbPrice" Grid.Row="4" 
                  Padding="12" FontSize="14"
                  Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
                  FontFamily="Book Antiqua"
@@ -67,42 +63,31 @@
                    Foreground="{StaticResource MainBlack}" 
                    FontFamily="Book Antiqua"
                    Margin="0,0,0,5"/>
-        <ComboBox x:Name="CategoryBox" Grid.Row="6" 
+        <ComboBox x:Name="CategoryComboBox" Grid.Row="6" 
                   Padding="12" FontSize="14"
                   Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
                   DisplayMemberPath="Name" SelectedValuePath="Id"
                   FontFamily="Book Antiqua"
                   Margin="0,0,0,15"/>
 
-        <!-- Изображение -->
-        <TextBlock Grid.Row="7" Text="Имя файла изображения:" FontSize="14" FontWeight="SemiBold" 
+        <!-- Количество -->
+        <TextBlock Grid.Row="7" Text="Количество на складе:" FontSize="14" FontWeight="SemiBold" 
                    Foreground="{StaticResource MainBlack}" 
                    FontFamily="Book Antiqua"
                    Margin="0,0,0,5"/>
-        <TextBox x:Name="ImageBox" Grid.Row="8" 
+        <TextBox x:Name="TbStock" Grid.Row="8" 
                  Padding="12" FontSize="14"
                  Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
-                 FontFamily="Book Antiqua"
-                 Margin="0,0,0,15"/>
-
-        <!-- Рейтинг -->
-        <TextBlock Grid.Row="9" Text="Рейтинг:" FontSize="14" FontWeight="SemiBold" 
-                   Foreground="{StaticResource MainBlack}" 
-                   FontFamily="Book Antiqua"
-                   Margin="0,0,0,5"/>
-        <TextBox x:Name="RatingBox" Grid.Row="10" 
-                 Padding="12" FontSize="14"
-                 Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
-                 Text="4.5"
+                 Text="0"
                  FontFamily="Book Antiqua"
                  Margin="0,0,0,15"/>
 
         <!-- Скидка -->
-        <TextBlock Grid.Row="11" Text="Скидка (%):" FontSize="14" FontWeight="SemiBold" 
+        <TextBlock Grid.Row="9" Text="Скидка (%):" FontSize="14" FontWeight="SemiBold" 
                    Foreground="{StaticResource MainBlack}" 
                    FontFamily="Book Antiqua"
                    Margin="0,0,0,5"/>
-        <TextBox x:Name="DiscountBox" Grid.Row="12" 
+        <TextBox x:Name="TbDiscountPercent" Grid.Row="10" 
                  Padding="12" FontSize="14"
                  Background="White" BorderBrush="#EEEEEE" BorderThickness="1"
                  Text="0"
@@ -110,10 +95,10 @@
                  Margin="0,0,0,15"/>
 
         <!-- В наличии -->
-        <Border Grid.Row="13" Background="{StaticResource PastelGreen}" 
+        <Border Grid.Row="11" Background="{StaticResource PastelGreen}" 
                 CornerRadius="15" Padding="10,4" 
                 HorizontalAlignment="Left" Margin="0,0,0,15">
-            <CheckBox x:Name="AvailableBox" 
+            <CheckBox x:Name="ChkIsAvailable" 
                       Content="Товар в наличии" 
                       FontSize="13" FontWeight="SemiBold"
                       Foreground="White"
@@ -122,8 +107,8 @@
         </Border>
 
         <!-- Кнопки -->
-        <StackPanel Grid.Row="14" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <Button x:Name="SaveBtn" 
+        <StackPanel Grid.Row="12" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button x:Name="BtnAddEdit" 
                     Content="💾 Сохранить"
                     Background="{StaticResource PastelGreen}" 
                     Foreground="White"
@@ -131,8 +116,8 @@
                     FontSize="14" FontWeight="SemiBold"
                     FontFamily="Book Antiqua"
                     Cursor="Hand" BorderThickness="0"
-                    Click="SaveBtn_Click"/>
-            <Button x:Name="CancelBtn" 
+                    Click="BtnAddEdit_Click"/>
+            <Button x:Name="BtnCancel" 
                     Content="❌ Отмена"
                     Background="#EEEEEE" Foreground="{StaticResource MainBlack}"
                     Width="130" Height="40" Margin="10"
@@ -140,7 +125,7 @@
                     FontFamily="Book Antiqua"
                     Cursor="Hand" BorderThickness="1"
                     BorderBrush="{StaticResource PastelGreen}"
-                    Click="CancelBtn_Click"/>
+                    Click="BtnCancel_Click"/>
         </StackPanel>
     </Grid>
 </Page>

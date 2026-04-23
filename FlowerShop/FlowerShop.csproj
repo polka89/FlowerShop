@@ -140,6 +140,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationData\DataStore.cs" />
+    <Compile Include="ApplicationData\OrderStorage.cs" />
+    <Compile Include="ApplicationData\UserService.cs" />
     <Compile Include="data\Bouquets.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

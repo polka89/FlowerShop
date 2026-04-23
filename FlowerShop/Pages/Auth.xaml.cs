@@ -7,12 +7,9 @@ namespace FlowerShop.Pages
 {
     public partial class Auth : Page
     {
-        private ShopModel _shop;
-
         public Auth()
         {
             InitializeComponent();
-            _shop = new ShopModel();
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -32,12 +29,20 @@ namespace FlowerShop.Pages
                 return;
             }
 
-            var user = _shop.FindUser(login, password);
+            // Ищем пользователя через сервис
+            var userJson = UserService.FindUser(login, password);
 
-            if (user != null)
+            if (userJson != null)
             {
-                // ПЕРЕДАЕМ ПОЛЬЗОВАТЕЛЯ В PageTask
-                NavigationService?.Navigate(new PageTask(user));
+                // Создаем объект User для передачи в PageTask
+                var appUser = new User
+                {
+                    Id = userJson.Id,
+                    Login = userJson.Login,
+                    FullName = userJson.FullName,
+                    RoleId = userJson.RoleId
+                };
+                NavigationService?.Navigate(new PageTask(appUser));
             }
             else
             {
