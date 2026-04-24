@@ -32,11 +32,29 @@ namespace FlowerShop.ApplicationData
                 var orders = GetAllOrders();
                 order.Id = orders.Count > 0 ? orders.Max(o => o.Id) + 1 : 1;
                 order.OrderDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+                order.Status = OrderStatusConstants.Pending;
                 orders.Add(order);
 
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string json = JsonSerializer.Serialize(orders, options);
                 File.WriteAllText(_ordersFilePath, json);
+            }
+        }
+
+        public static void UpdateOrderStatus(int orderId, string newStatus)
+        {
+            lock (_lock)
+            {
+                var orders = GetAllOrders();
+                var order = orders.FirstOrDefault(o => o.Id == orderId);
+                if (order != null)
+                {
+                    order.Status = newStatus;
+
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    string json = JsonSerializer.Serialize(orders, options);
+                    File.WriteAllText(_ordersFilePath, json); // ИСПРАВЛЕНО: WriteAllText вместо WriteAllBytes
+                }
             }
         }
 
@@ -64,6 +82,7 @@ namespace FlowerShop.ApplicationData
         public decimal FinalTotal { get; set; }
         public string DeliveryMethod { get; set; }
         public string DeliveryAddress { get; set; }
+        public string Status { get; set; } = OrderStatusConstants.Pending;
         public List<OrderItemData> Items { get; set; }
     }
 

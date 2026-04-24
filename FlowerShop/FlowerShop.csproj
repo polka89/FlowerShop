@@ -141,6 +141,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationData\DataStore.cs" />
+    <Compile Include="ApplicationData\OrderStatusConstants.cs" />
     <Compile Include="ApplicationData\OrderStorage.cs" />
     <Compile Include="ApplicationData\UserService.cs" />
     <Compile Include="data\Bouquets.cs">
